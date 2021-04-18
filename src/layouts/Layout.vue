@@ -7,7 +7,23 @@
           Maverick Todo
         </q-toolbar-title>
 
-        
+        <q-btn
+          v-if="!loggedIn"
+          to="/auth"
+          flat
+          icon-right="account_circle"
+          label="Login"
+          class="absolute-right" />
+
+        <q-btn
+          v-if="loggedIn"
+          @click="logoutUser"
+          to="/auth"
+          flat
+          icon-right="account_circle"
+          label="Logout"
+          class="absolute-right" />
+       
       </q-toolbar>
     </q-header>
 
@@ -57,6 +73,7 @@
 </template>
 
 <script>
+  import { mapState, mapActions } from 'vuex'
   import { openURL } from 'quasar'
 
   export default {
@@ -78,7 +95,11 @@
         ]
       }
     },
+    computed: {
+      ...mapState('auth', ['loggedIn'])
+    },
     methods: {
+       ...mapActions('auth', ['logoutUser']),
       openURL
     }
   }
